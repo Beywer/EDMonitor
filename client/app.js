@@ -1,17 +1,8 @@
+import App from 'containers/App/App';
+import ReactDom from 'react-dom';
 import React from 'react';
-import testImg from 'client/images/testImg.png';
-import testStyles from 'client/test.css';
+import 'whatwg-fetch';
+import 'app.css';
 
-const test = 'asdfasdf';
-const root = document.getElementById('root');
-
-console.log(test, root, testImg, React);
-root.innerText = test;
-
-const img = document.createElement('img');
-document.body.appendChild(img);
-img.styleName = testStyles.testImage;
-img.src = testImg;
-
-console.log(testStyles);
-
+const appDiv = document.getElementById('app');
+ReactDom.render(<App/>, appDiv);

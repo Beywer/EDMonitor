@@ -1,54 +1,70 @@
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 const path = require('path');
 
-module.exports = {
-    entry: path.join(process.cwd(), 'client/app.js'),
+// PostCSS plugins
+// const cssnext = require('postcss-cssnext');
+// const postcssReporter = require('postcss-reporter');
 
-    output: {
-        path: path.resolve(process.cwd(), 'build'),
-        filename: 'bundle.js'
-    },
 
-    plugins: [
-        new CleanWebpackPlugin(['build'], {root: process.cwd()}),
-        new HtmlWebpackPlugin({template: path.resolve(process.cwd(), 'client/index.html')})
-    ],
+module.exports = function (options) {
+    return {
+        entry: path.join(process.cwd(), 'client/app.js'),
 
-    module: {
-        rules: [
-            {
-                test: /\.(png|jpg|gif|svg)$/,
-                loader: 'file-loader',
-                options: {
-                    name: '[name][hash].[ext]'
+        output: {
+            path: path.resolve(process.cwd(), 'server/public'),
+            filename: 'main.js'
+        },
+
+        plugins: [
+            new CleanWebpackPlugin(['server/public'], {root: process.cwd()}),
+            new HtmlWebpackPlugin({template: path.resolve(process.cwd(), 'client/index.html')}),
+
+            new webpack.ProvidePlugin({
+                'Promise': 'es6-promise',
+            }),
+
+        ].concat(options.plugins),
+
+        module: {
+            rules: [
+                {
+                    test: /\.(png|jpg|gif|svg)$/,
+                    loader: 'file-loader',
+                    options: {
+                        name: options.imagesName
+                    }
+                },
+                {
+                    test: /\.js$|\.jsx$/,
+                    exclude: /node_modules/,
+                    loader: "babel-loader",
+                    options: {
+                        extends: path.resolve(process.cwd(), 'configs/babel/.babelrc')
+                    }
+                },
+                {
+                    test: /\.css$/,
+                    exclude: /node_modules/,
+                    loaders: options.cssLoaders,
+                },
+                {
+                    test: /\.css$/,
+                    include: /node_modules/,
+                    loaders: ['style-loader', 'css-loader'],
                 }
-            },
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: "babel-loader",
-                options: {
-                    extends: path.resolve(process.cwd(), 'configs/babel/.babelrc')
-                }
-            },
-            {
-                test: /\.css$/,
-                use: [
-                    {loader: "style-loader"},
-                    {loader: "css-loader"}
-                ]
-            }
-        ]
-    },
+            ]
+        },
 
-    devtool: "eval-source-map",
+        devtool: options.devtool,
 
-    resolve: {
-        modules: [
-            path.resolve('./node_modules'),
-            path.resolve('./client')
-        ],
-        extensions: [".jsx", ".jsx.js", ".js"]
+        resolve: {
+            modules: [
+                path.resolve('./node_modules'),
+                path.resolve('./client')
+            ],
+            extensions: [".jsx", ".jsx.js", ".js"]
+        },
     }
 };
