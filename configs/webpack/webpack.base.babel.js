@@ -10,16 +10,26 @@ const path = require('path');
 
 module.exports = function (options) {
     return {
-        entry: path.join(process.cwd(), 'client/app.js'),
+        entry: [
+            'webpack-dev-server/client?http://0.0.0.0:3000',
+            'webpack/hot/only-dev-server',
+            path.join(process.cwd(), 'client/app.js')
+        ],
 
         output: {
             path: path.resolve(process.cwd(), 'server/public'),
-            filename: 'main.js'
+            filename: 'main[hash].js'
         },
 
         plugins: [
             new CleanWebpackPlugin(['server/public'], {root: process.cwd()}),
             new HtmlWebpackPlugin({template: path.resolve(process.cwd(), 'client/index.html')}),
+
+            new webpack.DefinePlugin({
+                'process.env': {
+                    NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+                },
+            }),
 
             new webpack.ProvidePlugin({
                 'Promise': 'es6-promise',
@@ -57,8 +67,6 @@ module.exports = function (options) {
             ]
         },
 
-        devtool: options.devtool,
-
         resolve: {
             modules: [
                 path.resolve('./node_modules'),
@@ -66,5 +74,14 @@ module.exports = function (options) {
             ],
             extensions: [".jsx", ".jsx.js", ".js"]
         },
+
+        devtool: options.devtool,
+        // devServer: {
+        //     port: 3000,
+        //     proxy: {
+        //         "/socket.io": "http://localhost:3200"
+        //     }
+        // }
+
     }
 };

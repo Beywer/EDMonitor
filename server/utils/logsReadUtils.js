@@ -31,7 +31,7 @@ async function watchJournalChanges(folder, callback) {
                 callback(newLines);
             })
             .catch(err => console.error(err));
-        setTimeout(startLinesRead, 2000);
+        setTimeout(startLinesRead, 1000);
     })();
 }
 

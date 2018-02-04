@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+
 module.exports = require('./webpack.base.babel')({
     imagesName: '[name].[ext]',
 
@@ -21,7 +23,9 @@ module.exports = require('./webpack.base.babel')({
         }
     ],
 
-    plugins: [],
+    plugins: [
+        new webpack.HotModuleReplacementPlugin()
+    ],
 
     devtool: 'eval-source-map',
 });

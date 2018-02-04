@@ -1,0 +1,17 @@
+@value headerHeight from 'styles/mainAppTheme.css';
+
+@value paddingTop: calc(headerHeight + 4px);
+
+@value workAreaHeight: calc(100% - headerHeight);
+
+.app {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.workArea {
+    width: 100%;
+    height: workAreaHeight;
+    box-sizing: border-box;
+}

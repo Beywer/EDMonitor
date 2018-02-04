@@ -6,8 +6,8 @@
   "license": "ISC",
   "private": true,
   "scripts": {
-    "start": "webpack-dev-server --config configs/webpack/webpack.dev.babel.js",
-    "build": "webpack --config configs/webpack/webpack.prod.babel.js",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --config configs/webpack/webpack.dev.babel.js --host 0.0.0.0  --port 3000",
+    "build": "cross-env NODE_ENV=production webpack --config configs/webpack/webpack.prod.babel.js",
     "startServer": "node server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,7 +17,9 @@
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "whatwg-fetch": "^2.0.3"
+    "socket.io": "^2.0.4",
+    "whatwg-fetch": "^2.0.3",
+    "ws": "^4.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -26,6 +28,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "^0.1.17",
+    "cross-env": "^5.1.3",
     "css-loader": "^0.28.7",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.5",

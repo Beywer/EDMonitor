@@ -1,0 +1,27 @@
+@value primaryColor, headerShadow, headerHeight, bgColor  from 'styles/mainAppTheme.css';
+
+.menu {
+    width: 100%;
+    height: headerHeight;
+    box-shadow: headerShadow;
+    background-color: bgColor;
+    padding: 0 24px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.playerName {
+    composes: headerText from 'styles/mainAppTheme.css';
+    display: inline-block;
+    height: headerHeight;
+    line-height: headerHeight;
+    padding: 0 6px 0 0;
+    user-select: none;
+}
+
+.logo {
+    height: headerHeight;
+    padding: 12px 6px;
+    box-sizing: border-box;
+    vertical-align: bottom;
+}

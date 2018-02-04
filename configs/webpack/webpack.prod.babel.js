@@ -1,4 +1,5 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = require('./webpack.base.babel')({
     imagesName: '[hash].[ext]',
@@ -25,7 +26,8 @@ module.exports = require('./webpack.base.babel')({
     }),
 
     plugins: [
-        new ExtractTextPlugin("main.css"),
+        new webpack.optimize.UglifyJsPlugin(),
+        new ExtractTextPlugin("main[hash].css")
     ],
 
     devtool: false

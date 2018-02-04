@@ -1,0 +1,28 @@
+/* Colors */
+@value primaryColor: #ff7100;
+
+@value bgColor: #FFFFFF;
+
+@value mainTextColor: #2f2f2f;
+
+/* Sizes */
+@value headerHeight: 56px;
+
+/* Shadows */
+@value headerShadow: 0 0 5px 1px rgba(0,0,0,0.3);
+
+/* -------- */
+
+@value mainTextSize: 0.812rem;
+
+@value headerTextSize: 1.125rem;
+
+.text {
+    font-size: mainTextSize;
+    color: mainTextColor;
+}
+
+.headerText {
+    font-size: headerTextSize;
+    color: mainTextColor;
+}
