@@ -8,8 +8,8 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --config configs/webpack/webpack.dev.babel.js --host 0.0.0.0  --port 3000",
     "build": "cross-env NODE_ENV=production webpack --config configs/webpack/webpack.prod.babel.js",
-    "startServer": "node server/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "startServer": "cross-env NODE_ENV=development node app/server/server.js",
+    "buildServer": "echo \"Error: no build server specified\" && exit 1"
   },
   "dependencies": {
     "es6-promise": "^4.2.4",
@@ -17,6 +17,8 @@
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
+    "redux": "^3.7.2",
+    "redux-saga": "^0.16.0",
     "socket.io": "^2.0.4",
     "whatwg-fetch": "^2.0.3",
     "ws": "^4.0.0"

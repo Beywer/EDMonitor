@@ -1,11 +1,8 @@
-const {UPCOMING_LINES_CHANNEL} = require("../model/socketConstants");
+const {UPCOMING_LINES_CHANNEL} = require('./../common/socketConstants');
 const EDJournalReader = require('./scripts/EDJournalReader');
 const nodeStatic = require('node-static');
 const http = require('http');
 const osInfo = require("os");
-
-const Pilot = require('../model/Pilot');
-console.log(new Pilot());
 
 // Static server init
 const fileServer = new nodeStatic.Server('server/public');
@@ -23,21 +20,14 @@ const filesWatcher = new EDJournalReader(osInfo.userInfo().username);
 const io = require('socket.io')(mainServer);
 io.on('connection', function (socket) {
     console.log(socket.id, 'connected');
-    filesWatcher.addLogsChangeListener(logChangeListener);
+    filesWatcher.registerSocket(socket);
     socket.on('disconnect', () => {
         console.log(socket.id, 'disconnected');
-        filesWatcher.removeLogsChangeListener(logChangeListener)
+        filesWatcher.unregisterSocket(socket);
     });
-
-    console.log(socket.id, 'send read lines');
-    logChangeListener(filesWatcher.allRadLines);
-
-    function logChangeListener(newLines) {
-        console.log(socket.id, 'send receive new lines');
-        socket.emit(UPCOMING_LINES_CHANNEL, newLines);
-    }
 });
 
+// Run server
 mainServer.listen(3200, () => {
     console.log('EDMonitor server started at http://localhost:3200');
 });

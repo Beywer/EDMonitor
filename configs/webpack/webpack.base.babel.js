@@ -13,17 +13,17 @@ module.exports = function (options) {
         entry: [
             'webpack-dev-server/client?http://0.0.0.0:3000',
             'webpack/hot/only-dev-server',
-            path.join(process.cwd(), 'client/app.js')
+            path.join(process.cwd(), 'app/client/app.js')
         ],
 
         output: {
-            path: path.resolve(process.cwd(), 'server/public'),
+            path: path.resolve(process.cwd(), 'build/public'),
             filename: 'main[hash].js'
         },
 
         plugins: [
-            new CleanWebpackPlugin(['server/public'], {root: process.cwd()}),
-            new HtmlWebpackPlugin({template: path.resolve(process.cwd(), 'client/index.html')}),
+            new CleanWebpackPlugin(['build/public'], {root: process.cwd()}),
+            new HtmlWebpackPlugin({template: path.resolve(process.cwd(), 'app/client/index.html')}),
 
             new webpack.DefinePlugin({
                 'process.env': {
@@ -70,7 +70,8 @@ module.exports = function (options) {
         resolve: {
             modules: [
                 path.resolve('./node_modules'),
-                path.resolve('./client')
+                path.resolve('./app'),
+                path.resolve('./app/client')
             ],
             extensions: [".jsx", ".jsx.js", ".js"]
         },
