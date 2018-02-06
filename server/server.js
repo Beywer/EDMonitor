@@ -4,6 +4,9 @@ const nodeStatic = require('node-static');
 const http = require('http');
 const osInfo = require("os");
 
+const Pilot = require('../model/Pilot');
+console.log(new Pilot());
+
 // Static server init
 const fileServer = new nodeStatic.Server('server/public');
 const mainServer = http.createServer();
