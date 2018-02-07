@@ -5,7 +5,7 @@ const http = require('http');
 const osInfo = require("os");
 
 // Static server init
-const fileServer = new nodeStatic.Server('server/public');
+const fileServer = new nodeStatic.Server('app/server/public');
 const mainServer = http.createServer();
 mainServer.on('request', (req, resp) => {
     req.addListener('end', () => {

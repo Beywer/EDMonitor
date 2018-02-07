@@ -3,6 +3,8 @@
 
 @value bgColor: #FFFFFF;
 
+@value bgColorHover: #F2F2F2;
+
 @value mainTextColor: #2f2f2f;
 
 /* Sizes */
@@ -11,11 +13,14 @@
 /* Shadows */
 @value headerShadow: 0 0 5px 1px rgba(0,0,0,0.3);
 
-/* -------- */
+@value menuShadow: headerShadow;
 
+/* -------- */
 @value mainTextSize: 0.812rem;
 
 @value headerTextSize: 1.125rem;
+
+@value subHeaderTextSize: 1rem;
 
 .text {
     font-size: mainTextSize;
@@ -26,3 +31,18 @@
     font-size: headerTextSize;
     color: mainTextColor;
 }
+
+.subHeaderText {
+    font-size: headerTextSize;
+    color: mainTextColor;
+}
+
+.clickableItem:hover {
+    background-color: bgColorHover;
+}
+
+.clickableItem, .clickableItem:active {
+    background-color: bgColor;
+    transition: background-color 0.3s ease;
+}
+

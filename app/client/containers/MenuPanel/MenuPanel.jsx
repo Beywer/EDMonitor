@@ -1,3 +1,4 @@
+import PilotMenuButton from "components/PilotMenuButton/PilotMenuButton";
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './MenuPanel.css';
@@ -6,13 +7,14 @@ import {icons} from './MenuPanelIcons';
 export default class MenuPanel extends React.Component {
 
     render() {
-        const props = this.props;
         return (
             <ul className={styles.menu}>
-                <div className={styles.playerName}>
-                    <img src={icons.logo} className={styles.logo}/>
-                    EDMonitor
-                </div>
+                <img src={icons.logo} className={styles.logo}/>
+                <div className={styles.appName}>EDMonitor</div>
+
+                <div className={styles.spaceDivider}></div>
+
+                <PilotMenuButton/>
             </ul>
         );
     }

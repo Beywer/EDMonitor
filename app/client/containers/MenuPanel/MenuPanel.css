@@ -8,20 +8,23 @@
     padding: 0 24px;
     margin: 0;
     box-sizing: border-box;
-}
 
-.playerName {
-    composes: headerText from 'styles/mainAppTheme.css';
-    display: inline-block;
-    height: headerHeight;
-    line-height: headerHeight;
-    padding: 0 6px 0 0;
-    user-select: none;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
 }
 
 .logo {
-    height: headerHeight;
-    padding: 12px 6px;
-    box-sizing: border-box;
-    vertical-align: bottom;
+    flex: 0 0;
+    height: 40px;
+}
+
+.appName {
+    composes: headerText from 'styles/mainAppTheme.css';
+    flex: 0 0;
+    padding-left: 12px;
+}
+
+.spaceDivider {
+    flex: 1 0;
 }

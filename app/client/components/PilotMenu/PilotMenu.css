@@ -1,0 +1,19 @@
+@value bgColor, menuShadow from 'styles/mainAppTheme.css';
+
+@value menuWidth: 240px;
+
+.container {
+    width: menuWidth;
+    background-color: bgColor;
+    box-shadow: menuShadow;
+    height: 40px;
+}
+
+.infoHeader {
+
+}
+
+.value {
+
+}
+
