@@ -1,4 +1,4 @@
-import {namePath, shipIdPath, shipInfoPath} from "utils/model/shipInfo/shipInfoConstants";
+import {shipInfoPath} from "utils/model/shipInfo/shipInfoConstants";
 import {appDataPath} from "appConstants";
 import store from "reduxStore/store";
 import {Map} from 'immutable';
@@ -10,10 +10,16 @@ export default class ShipInfoConnector {
     }
 
     static get name() {
-        return store.getState().getIn([appDataPath, shipInfoPath, namePath], '');
+        return store.getState().getIn([appDataPath, shipInfoPath, 'name'], '');
     }
     static get shipId() {
-        return store.getState().getIn([appDataPath, shipInfoPath, shipIdPath], '');
+        return store.getState().getIn([appDataPath, shipInfoPath, 'shipId'], '');
+    }
+    static get shipName() {
+        return store.getState().getIn([appDataPath, shipInfoPath, 'shipName'], '');
+    }
+    static get shipIdent() {
+        return store.getState().getIn([appDataPath, shipInfoPath, 'shipIdent'], '');
     }
 }
 

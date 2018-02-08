@@ -1,4 +1,4 @@
-import Journal from "components/Journal/Journal";
+import ExploreStats from "components/ExploreStats/ExploreStats";
 import MenuPanel from "containers/MenuPanel/MenuPanel";
 import React from 'react';
 import styles from './App.css';
@@ -10,7 +10,7 @@ export default class App extends React.Component {
             <div className={styles.app}>
                 <MenuPanel/>
                 <div className={styles.workArea}>
-                    <Journal/>
+                    <ExploreStats/>
                 </div>
             </div>
         );

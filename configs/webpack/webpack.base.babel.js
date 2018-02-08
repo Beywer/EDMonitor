@@ -11,18 +11,19 @@ const path = require('path');
 module.exports = function (options) {
     return {
         entry: [
-            'webpack-dev-server/client?http://0.0.0.0:3000',
-            'webpack/hot/only-dev-server',
+            // Нахуя я их добавлял ? Они сломали сборку: error Hot module reload not defined/enabled
+            // 'webpack-dev-server/client?http://0.0.0.0:3000',
+            // 'webpack/hot/only-dev-server',
             path.join(process.cwd(), 'app/client/app.js')
         ],
 
         output: {
-            path: path.resolve(process.cwd(), 'build/public'),
+            path: path.resolve(process.cwd(), 'app/server/public'),
             filename: 'main[hash].js'
         },
 
         plugins: [
-            new CleanWebpackPlugin(['build/public'], {root: process.cwd()}),
+            new CleanWebpackPlugin(['app/server/public'], {root: process.cwd()}),
             new HtmlWebpackPlugin({template: path.resolve(process.cwd(), 'app/client/index.html')}),
 
             new webpack.DefinePlugin({

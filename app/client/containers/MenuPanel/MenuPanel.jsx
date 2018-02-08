@@ -10,7 +10,7 @@ export default class MenuPanel extends React.Component {
         return (
             <ul className={styles.menu}>
                 <img src={icons.logo} className={styles.logo}/>
-                <div className={styles.appName}>EDMonitor</div>
+                <div className={styles.appName}><span className={styles.edAppName}>EDM</span>onitor</div>
 
                 <div className={styles.spaceDivider}></div>
 

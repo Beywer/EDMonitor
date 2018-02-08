@@ -1,0 +1,29 @@
+@value disabledTextColor from 'styles/mainAppTheme.css';
+
+.container {
+    composes: card from 'styles/cards.css';
+    width: auto;
+    display: inline-block;
+}
+
+.totalCosts {
+    composes: subHeaderText from 'styles/mainAppTheme.css';
+    padding: 6px 0;
+}
+
+.valueTitle {
+    color: disabledTextColor;
+    line-height: 1.1em;
+    padding-top: 4px;
+}
+
+.value {
+    line-height: 1.4em;
+    padding-bottom: 4px;
+}
+
+.mainCount {
+    display: inline-block;
+    min-width: 16px;
+    text-align: right;
+}

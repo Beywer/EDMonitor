@@ -1,3 +1,4 @@
+import LocationInfoConnector from "utils/model/locationInfo/LocationInfoConnector";
 import {namePath, pilotInfoPath} from "utils/model/pilotInfo/pilotInfoConstants";
 import ShipInfoConnector from "utils/model/shipInfo/ShipInfoConnector";
 import {appDataPath} from "appConstants";
@@ -10,11 +11,22 @@ export default class PilotInfoConnector {
         return store.getState().getIn([appDataPath, pilotInfoPath], new Map());
     }
 
+
+    static get ship() {
+        return ShipInfoConnector;
+    }
+    static get location() {
+        return LocationInfoConnector;
+    }
+
     static get name() {
         return store.getState().getIn([appDataPath, pilotInfoPath, namePath], '');
     }
-    static get ship() {
-        return ShipInfoConnector;
+    static get currentSystem() {
+        return store.getState().getIn([appDataPath, pilotInfoPath, 'currentSystem'], '');
+    }
+    static get credits() {
+        return store.getState().getIn([appDataPath, pilotInfoPath, 'credits'], 0);
     }
 }
 

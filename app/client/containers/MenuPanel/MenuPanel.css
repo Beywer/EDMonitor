@@ -1,4 +1,4 @@
-@value primaryColor, headerShadow, headerHeight, bgColor  from 'styles/mainAppTheme.css';
+@value primaryColor, headerShadow, headerHeight, bgColor, textSemiBoldWeight, headerTextSize  from 'styles/mainAppTheme.css';
 
 .menu {
     width: 100%;
@@ -22,7 +22,14 @@
 .appName {
     composes: headerText from 'styles/mainAppTheme.css';
     flex: 0 0;
-    padding-left: 12px;
+    padding-left: 6px;
+    font-size: 1.3125rem;
+}
+
+.edAppName {
+    font-size: headerTextSize;
+    font-weight: textSemiBoldWeight;
+    color: primaryColor;
 }
 
 .spaceDivider {

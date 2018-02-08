@@ -1,19 +1,25 @@
-@value bgColor, menuShadow from 'styles/mainAppTheme.css';
+@value bgColor, disabledTextColor from 'styles/mainAppTheme.css';
 
 @value menuWidth: 240px;
 
+@value sidePadding: 12px;
+
 .container {
+    composes: text from 'styles/mainAppTheme.css';
     width: menuWidth;
     background-color: bgColor;
-    box-shadow: menuShadow;
-    height: 40px;
+    padding: 8px;
+    box-sizing: border-box;
 }
 
-.infoHeader {
-
+.valueTitle {
+    color: disabledTextColor;
+    line-height: 1.1em;
+    padding: 4px sidePadding 0 sidePadding;
 }
 
 .value {
-
+    line-height: 1.4em;
+    padding: 0 sidePadding 4px sidePadding;
 }
 

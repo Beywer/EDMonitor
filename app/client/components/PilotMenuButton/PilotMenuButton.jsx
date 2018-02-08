@@ -4,14 +4,29 @@ import PropTypes from 'prop-types';
 import PilotInfoConnector from "utils/model/pilotInfo/PilotInfoConnector";
 import styles from './PilotMenuButton.css';
 import store from 'reduxStore/store';
-import pilotIcon from 'images/pilotIcon.png';
+import pilotIcon from 'images/pilotIcon2.png';
 
 export default class PilotMenuButton extends React.Component {
 
     constructor(props) {
         super(props);
         this._pilotInfo = null;
-        this.state = {menuOpened: false};
+        this.state = {menuOpened: true};
+
+        this._handlePilotButtonClick = this._handlePilotButtonClick.bind(this);
+    }
+
+    render() {
+        return (
+            <div className={styles.container}>
+                <button className={styles.menuButton} onClick={this._handlePilotButtonClick}>
+                    <span className={styles.pilotName}>{PilotInfoConnector.name}</span>
+                    <img className={styles.pilotIcon} src={pilotIcon}/>
+                </button>
+
+                {this.state.menuOpened ? <PilotMenu className={styles.pilotMenu}/> : ''}
+            </div>
+        );
     }
 
     componentDidMount() {
@@ -31,16 +46,10 @@ export default class PilotMenuButton extends React.Component {
         return true;
     }
 
-    render() {
-        return (
-            <div className={styles.container}>
-                <span className={styles.pilotName}>{PilotInfoConnector.name}</span>
-                <img className={styles.pilotIcon} src={pilotIcon}/>
-
-                <PilotMenu className={styles.pilotMenu}/>
-            </div>
-        );
+    _handlePilotButtonClick(e) {
+        this.setState({menuOpened: !this.state.menuOpened});
     }
+
 }
 
 PilotMenuButton.propTypes = {};

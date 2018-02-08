@@ -4,15 +4,17 @@
 
 @value cardHoverShadow: 0 0 6px 1px rgba(0,0,0,0.3);
 
-@value cardBorderRadius: 6px;
+/*@value cardBorderRadius: 6px;*/
 
 .card {
     composes: text from './mainAppTheme.css';
     background-color: bgColor;
     box-shadow: cardShadow;
-    border-radius: cardBorderRadius;
+    /*border-radius: cardBorderRadius;*/
     border: 2px solid transparent;
     box-sizing: border-box;
+    margin: 8px;
+    padding: 6px;
 
     transition: box-shadow 0.4s ease;
 }

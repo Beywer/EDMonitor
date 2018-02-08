@@ -7,7 +7,7 @@ const fs = require('fs');
 
 const path = 'C:\\Users\\{username}\\Saved Games\\Frontier Developments\\Elite Dangerous';
 
-let pilotInfo = {}, shipInfo = {};
+let pilotInfo = {}, shipInfo = {}, locationInfo = {};
 
 class EDJournalReader {
 
@@ -17,9 +17,21 @@ class EDJournalReader {
         this._path = path.replace('{username}', userName);
         this._options = Object.assign({}, options);
 
-        this._listeningSockets = [];
 
         watchJournalChanges(this._path, (lines = []) => this._handleReadLogLines(lines));
+
+        this._sendData = this._sendData.bind(this);
+        this._listeningSockets = [];
+        this._storeChangesHandlers = [
+            createStoreEntityChangeHandler('pilot info', mainPaths.pilotInfoPath,
+                socketChannels.PILOT_INFO_UPDATE, this._sendData),
+            createStoreEntityChangeHandler('ship info', mainPaths.shipInfoPath,
+                socketChannels.SHIP_INFO_UPDATE, this._sendData),
+            createStoreEntityChangeHandler('location info', mainPaths.locationInfoPath,
+                socketChannels.LOCATION_INFO_UPDATE, this._sendData),
+            createStoreEntityChangeHandler('scans info', mainPaths.scansInfoPath,
+                socketChannels.SCANS_INFO_UPDATE, this._sendData),
+        ];
         store.subscribe(this._handleStoreChanges.bind(this));
     }
 
@@ -50,19 +62,7 @@ class EDJournalReader {
     }
 
     _handleStoreChanges() {
-        const currState = store.getState();
-        const newPilotInfo = currState[mainPaths.clientDataPath][mainPaths.pilotInfoPath];
-        const newShipInfo = currState[mainPaths.clientDataPath][mainPaths.shipInfoPath];
-
-        if (pilotInfo !== newPilotInfo) {
-            pilotInfo = newPilotInfo;
-            this._sendData('pilot info', socketChannels.PILOT_INFO_UPDATE, newPilotInfo);
-        }
-
-        if (shipInfo !== newShipInfo) {
-            shipInfo = newShipInfo;
-            this._sendData('ship info', socketChannels.SHIP_INFO_UPDATE, newShipInfo);
-        }
+        this._storeChangesHandlers.forEach(handler => handler());
     }
 
     _sendData(dataName, chanelName, data) {
@@ -73,3 +73,14 @@ class EDJournalReader {
 }
 
 module.exports = EDJournalReader;
+
+
+function createStoreEntityChangeHandler(entityName, entityPath, chanelName, sendData) {
+    let entityValue = null;
+    return function () {
+        const newEntityValue = store.getState()[mainPaths.clientDataPath][entityPath] || null;
+        if (entityValue === newEntityValue) return;
+        entityValue = newEntityValue;
+        sendData(entityName, chanelName, newEntityValue);
+    }
+}
