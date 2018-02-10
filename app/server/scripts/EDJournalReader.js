@@ -1,25 +1,20 @@
-const {watchJournalChanges} = require('../utils/logsReadUtils');
-const logEventParsers = require('./logEventParsers');
 const socketChannels = require('./../../common/socketConstants');
+const {watchJournalChanges} = require('../utils/logsReadUtils');
+const {readFullScansHistory} = require('./scansInfoReader');
 const mainPaths = require('./../redux/storeMainPaths');
+const logEventParsers = require('./logEventParsers');
 const store = require('./../redux/store');
-const fs = require('fs');
 
 const path = 'C:\\Users\\{username}\\Saved Games\\Frontier Developments\\Elite Dangerous';
-
-let pilotInfo = {}, shipInfo = {}, locationInfo = {};
 
 class EDJournalReader {
 
     constructor(userName = null, options = {}) {
-        if (!userName) throw new Error('Cant start Elite logs watch without user name.');
-        this._userName = userName;
+        if (!userName) throw new Error('Cant start Elite logs watcher without OS username (determines file path to the logs).');
         this._path = path.replace('{username}', userName);
-        this._options = Object.assign({}, options);
 
 
-        watchJournalChanges(this._path, (lines = []) => this._handleReadLogLines(lines));
-
+        // Every store entity change handler check changes of its entity and send it by corresponding websocket channel
         this._sendData = this._sendData.bind(this);
         this._listeningSockets = [];
         this._storeChangesHandlers = [
@@ -33,6 +28,12 @@ class EDJournalReader {
                 socketChannels.SCANS_INFO_UPDATE, this._sendData),
         ];
         store.subscribe(this._handleStoreChanges.bind(this));
+
+        // Read of full scans history before monitoring has started will prevent collisions of double handle of
+        // newly Scan events (very low possibility but anyway)
+        readFullScansHistory(this._path)
+            .catch(err => console.error(err))
+            .then(() => watchJournalChanges(this._path, (lines = []) => this._handleReadLogLines(lines)));
     }
 
     registerSocket(socket) {

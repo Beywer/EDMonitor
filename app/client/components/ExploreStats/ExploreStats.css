@@ -2,8 +2,12 @@
 
 .container {
     composes: card from 'styles/cards.css';
-    width: auto;
-    display: inline-block;
+    margin: auto;
+    width: 320px;
+    padding: 12px 16px;
+    overflow-y: auto;
+    margin-top: 16px;
+    height: calc(100% - 32px);
 }
 
 .totalCosts {

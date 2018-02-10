@@ -34,7 +34,7 @@ export default class ExploreStats extends React.Component {
         const planetClasses = Object.keys(scansInfo).sort();
         return (
             <div className={styles.container}>
-                <div className={styles.totalCosts}>Total: {ScansInfoConnector.totalIncome}</div>
+                <div className={styles.totalCosts}>Total: {prettifyNumber(ScansInfoConnector.totalIncome)}</div>
                 {planetClasses.map(planetClass => {
                     return (
                         <div key={planetClass}>
@@ -54,3 +54,14 @@ export default class ExploreStats extends React.Component {
 ExploreStats.propTypes = {};
 
 ExploreStats.defaultProps = {};
+
+
+function prettifyNumber(n) {
+    const parts = [];
+    while (n > 0) {
+        const part = n % 1000;
+        n = (n - part) / 1000;
+        parts.unshift(part);
+    }
+    return parts.length > 0 ? parts.map(n => n.toString().padStart(3, '0')).join(' ') : 0;
+}

@@ -1,9 +1,9 @@
 // http://edcodex.info/?m=doc
-const {BlueWhiteO} = require('./../../common/starBodyNames');
 const {updateLocationInfo} = require('./../redux/locationInfo/locationInfoActions');
 const {updateScansInfo} = require('./../redux/scansInfo/scansInfoActions');
 const {updatePilotInfo} = require('./../redux/pilotInfo/pilotInfoActions');
 const {updateShipInfo} = require('./../redux/shipInfo/shipInfoActions');
+const {SCAN_EVENT_NAME, parseScanEvent} = require('./scansInfoReader');
 const store = require('./../redux/store');
 
 const parsers = [];
@@ -11,7 +11,7 @@ module.exports = parsers;
 
 parsers.push(event => {
     delete event.timestamp;
-    console.log(JSON.stringify(event));
+    // console.log(JSON.stringify(event));
     return false
 });
 
@@ -78,23 +78,8 @@ parsers.push(createParser('FSDJump', event => {
     }));
 }));
 
-parsers.push(createParser('Scan', event => {
-    let starBodyClass = event.PlanetClass;
-    if (event.StarType) {
-        switch (event.StarType) {
-            case 'O':
-                starBodyClass = BlueWhiteO;
-                break;
-            default:
-                starBodyClass = 'Star ' + event.StarType;
-                break;
-        }
-    }
-
-    store.dispatch(updateScansInfo({
-        terraformState: event.TerraformState,
-        starBodyClass,
-    }))
+parsers.push(createParser(SCAN_EVENT_NAME, event => {
+    store.dispatch(updateScansInfo(parseScanEvent(event)));
 }));
 
 // Last parser. Returns true will mean all events was handled, just ignored

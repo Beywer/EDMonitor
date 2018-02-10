@@ -6,6 +6,12 @@ const JOURNAL_FILE_NAME_REGEXP = /^Journal\.[0-9]{12}\.[0-9]{2,}\.log$/; //Journ
 
 module.exports = {watchJournalChanges};
 
+/**
+ * Monitor latest ED journal log file in the folder and call callback when detects a new portion of log lines
+ * @param folder
+ * @param callback
+ * @returns {Promise<void>}
+ */
 async function watchJournalChanges(folder, callback) {
 
     // Get last log file in journals folder. Allow read changes from already run Elite
